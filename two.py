@@ -1,8 +1,6 @@
 
-import operator
 import pygame
 import math
-import random
 
 # pygame window params
 WINDOW_WIDTH=640
@@ -28,13 +26,13 @@ def rotate(p, origin=(0, 0), degrees=0):
     return np.squeeze((R @ (p.T-o.T) + o.T).T)
 
 def grow(screen, centre, size, rotation, depth):
-    if depth > 30:
+    if depth > 10:
         return
     if size < 10:
         return
-    waft = 40 * math.sin( game_time_ms / 1000 )
+    waft = 10 * math.sin( game_time_ms / 1000 )
     rotation += waft
-    c = pygame.Color(250,200,60,10)
+    c = pygame.Color(250,200,60,50)
     left = centre[0] - size/2
     top = centre[1] - size/2
     points=[(left, top), (left+size, top), (left+size, top+size), (left, top+size)]
@@ -43,7 +41,7 @@ def grow(screen, centre, size, rotation, depth):
     # pygame.draw.polygon( screen, c, new_points)
     # pygame.draw.rect(screen, c , pygame.Rect(left, top, size, size))
     grow(screen, new_points[0], size*0.8, rotation+20, depth+1  )
-    grow(screen, new_points[2], size*0.8, rotation-180+20, depth+1  )
+    grow(screen, new_points[2], size*0.8, rotation-180-50, depth+1  )
 
 def update(screen):
     center = (WINDOW_WIDTH/2, WINDOW_HEIGHT/2)
